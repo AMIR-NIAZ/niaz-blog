@@ -13,6 +13,11 @@ import { BlogRepository } from "./Application/OutPut/BlogRepository";
 import { TypeOrmBlogRepository } from "./Infrastructure/Output/TypeOrm/TypeOrmBlogRepository";
 import { AddBlogImpl } from "./Application/UseCase/Commands/AddBlog/AddBlogImpl";
 import { CommentEntity } from "./Infrastructure/Output/TypeOrm/comment.entity";
+import { UpdateBlogImpl } from "./Application/UseCase/Commands/UpdateBlog/UpdateBlogImpl";
+import { DeleteBlogImpl } from "./Application/UseCase/Commands/DeleteBlog/DeleteBlogImpl";
+import { IncrementViewImpl } from "./Application/UseCase/Commands/IncrementView/IncrementViewImpl";
+import { ViewBlogImpl } from "./Application/UseCase/Queries/ViewBlog/ViewBlogImpl";
+import { BlogViewedHandler } from "./Application/UseCase/EventsHandler/BlogViewedHandler";
 
 @Module({
     imports: [
@@ -36,7 +41,12 @@ import { CommentEntity } from "./Infrastructure/Output/TypeOrm/comment.entity";
             useClass: JwtAppService,
         },
         JwtService,
-        AddBlogImpl
+        AddBlogImpl,
+        UpdateBlogImpl,
+        DeleteBlogImpl,
+        ViewBlogImpl,
+        BlogViewedHandler,
+        IncrementViewImpl
     ]
 })
 export class BlogModule { }

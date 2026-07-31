@@ -13,6 +13,9 @@ export class BlogEntity {
     @Column('text')
     content: string;
 
+    @Column()
+    ViewCount: number;
+
     @ManyToOne(() => UserEntity)
     @JoinColumn({
         name: "authorId"

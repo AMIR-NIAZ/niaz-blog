@@ -1,6 +1,6 @@
 import Blog from "src/Blog/Domain/Blog";
 import { BlogEntity } from "../TypeOrm/blog.entity";
-import BlogId from "src/Blog/Domain/ValueObjects/BligId";
+import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
 import Title from "src/Blog/Domain/ValueObjects/Title";
 import Content from "src/Blog/Domain/ValueObjects/Content";
 import UserId from "src/Blog/Domain/ValueObjects/UserId";
@@ -8,6 +8,9 @@ import Comment from "src/Blog/Domain/Comment";
 import CommentText from "src/Blog/Domain/ValueObjects/CommentText";
 import CommentId from "src/Blog/Domain/ValueObjects/CommentId";
 import { CommentEntity } from "../TypeOrm/comment.entity";
+import ViewCount from "src/Blog/Domain/ValueObjects/ViewCount";
+import BlogResponse from "src/Blog/Application/OutPut/Responses/BlogResponse";
+import { CommentResponse } from "src/Blog/Application/OutPut/Responses/CommentResponse";
 
 export default class BlogMapper {
     static toDomain(model: BlogEntity): Blog {
@@ -28,6 +31,7 @@ export default class BlogMapper {
             Title.fromValid(model.title),
             Content.fromValid(model.content),
             UserId.fromValid(model.author.id),
+            ViewCount.fromValid(model.ViewCount),
             comments,
             model.createdAt,
             model.updatedAt,
@@ -42,7 +46,10 @@ export default class BlogMapper {
         entity.id = blog.id.getValue;
         entity.title = blog.title.getValue;
         entity.content = blog.content.getValue;
-        entity.author.id = blog.userId.getValue;
+        entity.author = {
+            id: blog.userId.getValue
+        } as any
+        entity.ViewCount = blog.viewCount.getValue;
 
         entity.createdAt = blog.createdAt;
         entity.updatedAt = blog.updatedAt;
@@ -62,5 +69,26 @@ export default class BlogMapper {
         });
 
         return entity;
+    }
+
+    static toResponse(blog: Blog): BlogResponse {
+        return new BlogResponse(
+            blog.id.getValue,
+            blog.title.getValue,
+            blog.content.getValue,
+            blog.userId.getValue,
+            blog.viewCount.getValue,
+            blog.createdAt,
+            blog.updatedAt,
+            blog.comments?.map(comment =>
+                new CommentResponse(
+                    comment.id.getValue,
+                    comment.text.getValue,
+                    comment.userId.getValue,
+                    comment.createdAt,
+                    comment.updatedAt,
+                ),
+            )
+        );
     }
 }

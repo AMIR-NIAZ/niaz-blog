@@ -8,6 +8,7 @@ import BlogMapper from "../Mapper/BlogMapper";
 import { BlogEntity } from "./blog.entity";
 import DeleteBlog from "src/Blog/Domain/Events/DeleteBlog";
 import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
+import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
 
 @Injectable()
 export class TypeOrmBlogRepository implements BlogRepository {
@@ -32,12 +33,18 @@ export class TypeOrmBlogRepository implements BlogRepository {
         }
     }
 
-    async loadById(id: string) {
+    async loadById(id: BlogId) {
         const blog = await this.blogRepository.findOne({
             where: {
-                id
+                id: id.getValue
+            },
+            relations: {
+                author: true,
+                comments: {
+                    sender: true
+                }
             }
-        })
+        });
 
         return blog ? BlogMapper.toDomain(blog) : null;
     }
@@ -54,11 +61,6 @@ export class TypeOrmBlogRepository implements BlogRepository {
     private async update(blog: Blog) {
         const blogDocument = BlogMapper.toPersistence(blog)
 
-        const isBlogExists = await this.loadById(blogDocument.id);
-        if (!isBlogExists) {
-            console.log('not find');
-        }
-
         try {
             await this.blogRepository.save(blogDocument)
         } catch (err) {
@@ -68,11 +70,6 @@ export class TypeOrmBlogRepository implements BlogRepository {
 
     private async delete(blog: Blog) {
         const blogId = blog.id.getValue
-
-        const isBlogExists = await this.loadById(blogId);
-        if (!isBlogExists) {
-            console.log('not find');
-        }
 
         try {
             await this.blogRepository.delete(blogId)

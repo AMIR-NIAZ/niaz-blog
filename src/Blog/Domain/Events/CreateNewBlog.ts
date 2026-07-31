@@ -1,5 +1,5 @@
 import DomainEvent from "src/common/Domain/DomainEvent";
-import BlogId from "../ValueObjects/BligId";
+import BlogId from "../ValueObjects/BlogId";
 import UserId from "../ValueObjects/UserId";
 
 export default class CreateNewBlog extends DomainEvent {
