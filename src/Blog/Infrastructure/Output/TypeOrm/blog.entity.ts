@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 import { CommentEntity } from "./comment.entity";
 
 @Entity('blogs')
-export class BlogEntity {
+export class TypeOrmBlogEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

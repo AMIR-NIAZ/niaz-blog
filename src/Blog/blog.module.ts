@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { BlogEntity } from "./Infrastructure/Output/TypeOrm/blog.entity";
+import { TypeOrmBlogEntity } from "./Infrastructure/Output/TypeOrm/blog.entity";
 import { UserEntity } from "src/User/Infrastructure/Output/TypeOrm/user.entity";
 import { CqrsModule } from "@nestjs/cqrs";
 import { blogController } from "./Infrastructure/Input/blogController";
@@ -21,7 +21,7 @@ import { BlogViewedHandler } from "./Application/UseCase/EventsHandler/BlogViewe
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([BlogEntity, CommentEntity, UserEntity]),
+        TypeOrmModule.forFeature([TypeOrmBlogEntity, CommentEntity, UserEntity]),
         CqrsModule
     ],
     controllers: [

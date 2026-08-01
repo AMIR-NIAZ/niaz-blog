@@ -1,5 +1,5 @@
 import Blog from "src/Blog/Domain/Blog";
-import { BlogEntity } from "../TypeOrm/blog.entity";
+import { TypeOrmBlogEntity } from "../TypeOrm/blog.entity";
 import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
 import Title from "src/Blog/Domain/ValueObjects/Title";
 import Content from "src/Blog/Domain/ValueObjects/Content";
@@ -13,7 +13,7 @@ import BlogResponse from "src/Blog/Application/OutPut/Responses/BlogResponse";
 import { CommentResponse } from "src/Blog/Application/OutPut/Responses/CommentResponse";
 
 export default class BlogMapper {
-    static toDomain(model: BlogEntity): Blog {
+    static toDomain(model: TypeOrmBlogEntity): Blog {
         const comments: Comment[] = []
         for (const commentModel of model.comments ?? []) {
             const comment = new Comment(
@@ -40,8 +40,8 @@ export default class BlogMapper {
         return blog;
     }
 
-    static toPersistence(blog: Blog): BlogEntity {
-        const entity = new BlogEntity();
+    static toPersistence(blog: Blog): TypeOrmBlogEntity {
+        const entity = new TypeOrmBlogEntity();
 
         entity.id = blog.id.getValue;
         entity.title = blog.title.getValue;

@@ -5,7 +5,7 @@ import CreateNewBlog from "src/Blog/Domain/Events/CreateNewBlog";
 import UpdateBlog from "src/Blog/Domain/Events/UpdateBlog";
 import { Repository } from "typeorm";
 import BlogMapper from "../Mapper/BlogMapper";
-import { BlogEntity } from "./blog.entity";
+import { TypeOrmBlogEntity } from "./blog.entity";
 import DeleteBlog from "src/Blog/Domain/Events/DeleteBlog";
 import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
 import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
@@ -13,8 +13,8 @@ import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
 @Injectable()
 export class TypeOrmBlogRepository implements BlogRepository {
     constructor(
-        @InjectRepository(BlogEntity)
-        private readonly blogRepository: Repository<BlogEntity>
+        @InjectRepository(TypeOrmBlogEntity)
+        private readonly blogRepository: Repository<TypeOrmBlogEntity>
     ) { }
 
     async save(blog: Blog): Promise<void> {

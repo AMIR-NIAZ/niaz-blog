@@ -1,6 +1,6 @@
 import { UserEntity } from "src/User/Infrastructure/Output/TypeOrm/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { BlogEntity } from "./blog.entity";
+import { TypeOrmBlogEntity } from "./blog.entity";
 
 @Entity('comments')
 export class CommentEntity {
@@ -13,8 +13,8 @@ export class CommentEntity {
     @ManyToOne(() => UserEntity)
     sender: UserEntity;
 
-    @ManyToOne(() => BlogEntity)
-    blog: BlogEntity;
+    @ManyToOne(() => TypeOrmBlogEntity)
+    blog: TypeOrmBlogEntity;
 
     @CreateDateColumn()
     createdAt: Date;
