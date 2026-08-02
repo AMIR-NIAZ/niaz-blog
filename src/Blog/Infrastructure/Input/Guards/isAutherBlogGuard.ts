@@ -5,7 +5,7 @@ import {
     Inject,
     Injectable,
 } from '@nestjs/common';
-import { BlogRepository } from 'src/Blog/Application/OutPut/BlogRepository';
+import { BlogRepository } from 'src/Blog/Application/Ports/BlogRepository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import UserId from 'src/Blog/Domain/ValueObjects/UserId';
 import { Payload } from 'src/common/Application/payload';

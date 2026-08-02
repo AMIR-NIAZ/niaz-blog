@@ -9,8 +9,8 @@ import CommentText from "src/Blog/Domain/ValueObjects/CommentText";
 import CommentId from "src/Blog/Domain/ValueObjects/CommentId";
 import { CommentEntity } from "../TypeOrm/comment.entity";
 import ViewCount from "src/Blog/Domain/ValueObjects/ViewCount";
-import BlogResponse from "src/Blog/Application/OutPut/Responses/BlogResponse";
-import { CommentResponse } from "src/Blog/Application/OutPut/Responses/CommentResponse";
+import BlogResponse from "src/Blog/Application/Ports/Responses/BlogResponse";
+import { CommentResponse } from "src/Blog/Application/Ports/Responses/CommentResponse";
 
 export default class BlogMapper {
     static toDomain(model: TypeOrmBlogEntity): Blog {

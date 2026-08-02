@@ -2,10 +2,10 @@ import { EventBus, QueryHandler } from "@nestjs/cqrs";
 import { ViewBlogQuery } from "./ViewBlogQuery";
 import { ViewBlog } from "./ViewBlog";
 import { Inject } from "@nestjs/common";
-import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
+import { BlogRepository } from "src/Blog/Application/Ports/BlogRepository";
 import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
 import BlogMapper from "src/Blog/Infrastructure/Output/Mapper/BlogMapper";
-import BlogResponse from "src/Blog/Application/OutPut/Responses/BlogResponse";
+import BlogResponse from "src/Blog/Application/Ports/Responses/BlogResponse";
 import BlogViewedEvent from "src/Blog/Domain/Events/BlogViewedEvent";
 
 @QueryHandler(ViewBlogQuery)

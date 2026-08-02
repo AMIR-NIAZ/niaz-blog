@@ -4,7 +4,7 @@ import { UpdateBlog } from "./UpdateBlog";
 import Title from "src/Blog/Domain/ValueObjects/Title";
 import Content from "src/Blog/Domain/ValueObjects/Content";
 import { Inject } from "@nestjs/common";
-import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
+import { BlogRepository } from "src/Blog/Application/Ports/BlogRepository";
 import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
 
 @CommandHandler(UpdateBlogCommand)

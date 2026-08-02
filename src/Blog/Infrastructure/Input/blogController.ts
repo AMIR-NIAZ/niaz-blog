@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { PayloadGuard } from "src/common/Infrastructure/Input/Payload.guard";
 import { CreateBlogDto } from "./DTOs/CrateBlogDto";
@@ -8,7 +8,8 @@ import { UpdateBlogCommand } from "src/Blog/Application/UseCase/Commands/UpdateB
 import { DeleteBlogCommand } from "src/Blog/Application/UseCase/Commands/DeleteBlog/DeleteBlogCommand";
 import { isAutherBlogGuard } from "./Guards/isAutherBlogGuard";
 import { ViewBlogQuery } from "src/Blog/Application/UseCase/Queries/ViewBlog/ViewBlogQuery";
-import BlogResponse from "src/Blog/Application/OutPut/Responses/BlogResponse";
+import BlogResponse from "src/Blog/Application/Ports/Responses/BlogResponse";
+import { GetAllBlogsQuery } from "src/Blog/Application/UseCase/Queries/GetAllBlogs/GetAllBlogsQuery";
 
 @Controller('blogs')
 export class blogController {
@@ -48,6 +49,16 @@ export class blogController {
         );
 
         return { message: 'blog delete successfully' }
+    }
+
+    @Get()
+    async getAll(
+        @Query("page", new DefaultValuePipe(1), ParseIntPipe) page: number,
+        @Query("limit", new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    ) {
+        return this.queryBus.execute(
+            new GetAllBlogsQuery(page, limit)
+        );
     }
 
     @Get('/:blogId')

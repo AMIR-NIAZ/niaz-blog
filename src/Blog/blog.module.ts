@@ -9,7 +9,7 @@ import { TokenService } from "src/common/Application/Output/TokenService";
 import { JwtService } from "@nestjs/jwt";
 import { UserRepository } from "src/User/Application/Output/UserRepsitory";
 import { TypeOrmUserRepository } from "src/User/Infrastructure/Output/TypeOrm/TypeOrm.repository";
-import { BlogRepository } from "./Application/OutPut/BlogRepository";
+import { BlogRepository } from "./Application/Ports/BlogRepository";
 import { TypeOrmBlogRepository } from "./Infrastructure/Output/TypeOrm/TypeOrmBlogRepository";
 import { AddBlogImpl } from "./Application/UseCase/Commands/AddBlog/AddBlogImpl";
 import { CommentEntity } from "./Infrastructure/Output/TypeOrm/comment.entity";
@@ -18,6 +18,7 @@ import { DeleteBlogImpl } from "./Application/UseCase/Commands/DeleteBlog/Delete
 import { IncrementViewImpl } from "./Application/UseCase/Commands/IncrementView/IncrementViewImpl";
 import { ViewBlogImpl } from "./Application/UseCase/Queries/ViewBlog/ViewBlogImpl";
 import { BlogViewedHandler } from "./Application/UseCase/EventsHandler/BlogViewedHandler";
+import { GetAllBlogsImpl } from "./Application/UseCase/Queries/GetAllBlogs/GetAllBlogsImpl";
 
 @Module({
     imports: [
@@ -46,7 +47,8 @@ import { BlogViewedHandler } from "./Application/UseCase/EventsHandler/BlogViewe
         DeleteBlogImpl,
         ViewBlogImpl,
         BlogViewedHandler,
-        IncrementViewImpl
+        IncrementViewImpl,
+        GetAllBlogsImpl
     ]
 })
 export class BlogModule { }

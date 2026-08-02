@@ -2,7 +2,7 @@ import { CommandHandler } from "@nestjs/cqrs";
 import { DeleteBlogCommand } from "./DeleteBlogCommand";
 import { DeleteBlog } from "./DeleteBlog";
 import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
-import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
+import { BlogRepository } from "src/Blog/Application/Ports/BlogRepository";
 import { Inject } from "@nestjs/common";
 
 @CommandHandler(DeleteBlogCommand)

@@ -7,7 +7,7 @@ import { Inject } from "@nestjs/common";
 import { UserRepository } from "src/User/Application/Output/UserRepsitory";
 import { NotFoundException } from "src/common/Domain/Exceptions/NotFoundException";
 import Blog from "src/Blog/Domain/Blog";
-import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
+import { BlogRepository } from "src/Blog/Application/Ports/BlogRepository";
 import { CommandHandler } from "@nestjs/cqrs";
 
 @CommandHandler(AddBlogCommand)

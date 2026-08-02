@@ -7,8 +7,9 @@ import { Repository } from "typeorm";
 import BlogMapper from "../Mapper/BlogMapper";
 import { TypeOrmBlogEntity } from "./blog.entity";
 import DeleteBlog from "src/Blog/Domain/Events/DeleteBlog";
-import { BlogRepository } from "src/Blog/Application/OutPut/BlogRepository";
+import { BlogRepository } from "src/Blog/Application/Ports/BlogRepository";
 import BlogId from "src/Blog/Domain/ValueObjects/BlogId";
+import { Pagination } from "src/common/Application/Pagination";
 
 @Injectable()
 export class TypeOrmBlogRepository implements BlogRepository {
@@ -47,6 +48,36 @@ export class TypeOrmBlogRepository implements BlogRepository {
         });
 
         return blog ? BlogMapper.toDomain(blog) : null;
+    }
+
+    async getAll(
+        page: number,
+        limit: number,
+    ): Promise<Pagination<Blog>> {
+
+        const [rows, total] = await this.blogRepository.findAndCount({
+            skip: (page - 1) * limit,
+            take: limit,
+            order: {
+                createdAt: 'DESC',
+            },
+            relations: {
+                author: true,
+                comments: {
+                    sender: true
+                }
+            }
+        });
+
+        const data = rows.map((blog) => BlogMapper.toDomain(blog))
+
+        return {
+            data,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+        };
     }
 
     private async create(blog: Blog) {
