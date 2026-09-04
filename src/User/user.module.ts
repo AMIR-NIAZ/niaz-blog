@@ -7,25 +7,24 @@ import { RegisterImpl } from './Application/UseCase/Commands/register/RegisterIm
 import { HashService } from 'src/common/Application/Output/HashService';
 import { Argon2HashService } from 'src/common/Infrastructure/Output/Argon2Hash.service';
 import { Publisher } from 'src/common/Application/Output/Publisher';
-import { KafkaPublisher } from 'src/common/Infrastructure/Output/KafkaPublisher';
-import { KafkaModule } from 'src/common/Infrastructure/Output/kafka.module';
 import { UserController } from './Infrastructure/Input/user.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CacheModule } from '@nestjs/cache-manager';
 import { CacheService } from 'src/common/Application/Output/CacheService';
 import { NestCacheService } from 'src/common/Infrastructure/Output/NestCache.service';
-import { VerifyEmailCommand } from './Application/UseCase/Commands/verifyEmail/verifyEmailCommond';
 import { VerifyEmailImpl } from './Application/UseCase/Commands/verifyEmail/verifyEmailImpl';
 import { TokenService } from 'src/common/Application/Output/TokenService';
 import { JwtAppService } from 'src/common/Infrastructure/Output/JwtToken.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginImpl } from './Application/UseCase/Queries/Login/LoginImpl';
+import { RabbitMQPublisher } from 'src/common/Infrastructure/Output/RabbitMQPublisher';
+import { RabbitMQModule } from 'src/common/Infrastructure/Output/RabbitMQ.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
     CacheModule.register(),
-    KafkaModule,
+    RabbitMQModule,
     CqrsModule,
   ],
   controllers: [UserController],
@@ -44,7 +43,7 @@ import { LoginImpl } from './Application/UseCase/Queries/Login/LoginImpl';
     },
     {
       provide: Publisher,
-      useExisting: KafkaPublisher,
+      useExisting: RabbitMQPublisher,
     },
     {
       provide: CacheService,

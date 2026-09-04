@@ -1,26 +1,88 @@
 services:
-  kafka:
-    image: apache/kafka:4.3.0
-    container_name: kafka
+
+  # =========================
+  # RabbitMQ
+  # =========================
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq
 
     ports:
-      - "9092:9092"
+      - "5672:5672"
+      - "15672:15672"
 
     environment:
-      KAFKA_NODE_ID: 1
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
-      KAFKA_PROCESS_ROLES: broker,controller
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
-      KAFKA_LISTENERS: >
-        PLAINTEXT://:9092,
-        CONTROLLER://:9093
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
-      KAFKA_ADVERTISED_LISTENERS: >
-        PLAINTEXT://localhost:9092
 
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+  # =========================
+  # PostgreSQL
+  # =========================
+  postgres:
+    image: postgres:18
+    container_name: postgres
 
-      KAFKA_CONTROLLER_QUORUM_VOTERS: >
-        1@localhost:9093
+    ports:
+      - "5432:5432"
 
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    environment:
+      POSTGRES_DB: niaz_blog
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U postgres -d niaz_blog"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+
+  # =========================
+  # Application
+  # =========================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: niaz-blog
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+      rabbitmq:
+        condition: service_healthy
+
+
+# =========================
+# Volumes
+# =========================
+volumes:
+  postgres_data:
+  rabbitmq_data:

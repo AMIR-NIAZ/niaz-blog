@@ -1,19 +1,22 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { Transport } from '@nestjs/microservices';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.connectMicroservice({
-    transport: Transport.KAFKA,
+    transport: Transport.RMQ,
     options: {
-      client: {
-        brokers: ['localhost:9092'],
+      urls: [
+        `amqp://${process.env.RABBITMQ_USERNAME || 'guest'}:${process.env.RABBITMQ_PASSWORD || 'guest'}@${process.env.RABBITMQ_HOST || 'rabbitmq'}:${process.env.RABBITMQ_PORT || 5672}`,
+      ],
+      queue: process.env.RABBITMQ_QUEUE || 'niaz-blog',
+      queueOptions: {
+        durable: true,
       },
-      consumer: {
-        groupId: 'user-consumer',
-      },
+      noAck: false,
     },
   });
 
@@ -21,4 +24,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
+
 bootstrap();
