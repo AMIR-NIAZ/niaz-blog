@@ -1,4 +1,4 @@
-import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput';
+import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput.exception';
 import UUID4 from '../../../common/Domain/UUID4';
 import ValueObject from '../../../common/Domain/ValueObject';
 

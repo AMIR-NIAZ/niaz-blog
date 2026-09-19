@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Payload } from '../../Application/payload';
-import { TokenService } from '../../Application/Output/TokenService';
-import User from 'src/User/Domain/User';
+import { Payload } from '../../Application/Payload';
+import { TokenService } from '../../Application/Output/Token.service';
+import User from 'src/User/Domain/Entities/User';
 
 @Injectable()
 export class JwtAppService implements TokenService {
@@ -29,7 +29,7 @@ export class JwtAppService implements TokenService {
     const payload = {
       sub: user.id.getValue,
       role: user.role.getValue,
-    } as Payload;
+    };
     return await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
       expiresIn: '1h',
@@ -53,7 +53,7 @@ export class JwtAppService implements TokenService {
     const payload = {
       sub: user.id.getValue,
       role: user.role.getValue,
-    } as Payload;
+    };
 
     return await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),

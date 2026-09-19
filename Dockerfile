@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm i --registry=https://mirror2.chabokan.net/npm/ --verbos
+RUN npm ci --verbos
 
 COPY . .
 

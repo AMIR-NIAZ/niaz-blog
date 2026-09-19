@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
-import { RabbitMQPublisher } from './RabbitMQPublisher';
+import { RabbitMQPublisher } from './RabbitMQ.publisher';
 
 @Module({
   imports: [

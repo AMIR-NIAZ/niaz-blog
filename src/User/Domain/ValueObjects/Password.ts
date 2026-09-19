@@ -1,4 +1,4 @@
-import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput';
+import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput.exception';
 import ValueObject from '../../../common/Domain/ValueObject';
 
 export default class Password extends ValueObject<string> {

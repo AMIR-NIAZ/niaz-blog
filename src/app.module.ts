@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfig } from './common/Application/typeorm.config';
+import { TypeOrmConfig } from './common/Application/Typeorm.config';
 import { ConfigModule } from '@nestjs/config';
-import { userModule } from './User/user.module';
-import { BlogModule } from './Blog/blog.module';
+import { UserModule } from './User/User.module';
+import { BlogModule } from './Blog/Blog.module';
 
 @Module({
   imports: [
@@ -16,8 +16,8 @@ import { BlogModule } from './Blog/blog.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    userModule,
-    BlogModule
+    UserModule,
+    BlogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

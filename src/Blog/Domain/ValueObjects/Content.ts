@@ -8,6 +8,6 @@ export default class Content extends ValueObject<string> {
   }
 
   static fromValid(value: string) {
-    return new Content(value)
+    return new Content(value);
   }
 }
