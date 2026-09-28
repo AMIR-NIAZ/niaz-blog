@@ -4,7 +4,7 @@ import { RegisterCommand } from 'src/User/Application/UseCases/Commands/Register
 export class RegisterDto implements RegisterCommand {
   @IsString()
   username: string;
-  
+
   @IsString()
   password: string;
 

@@ -8,7 +8,7 @@ import {
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import UserId from 'src/Blog/Domain/ValueObjects/UserId';
-import { Payload } from 'src/common/Application/Payload';
+import { Payload } from 'src/Common/Application/Payload';
 
 @Injectable()
 export class IsAutherBlogGuard implements CanActivate {

@@ -1,4 +1,4 @@
-import DomainEvent from '../../../common/Domain/DomainEvent';
+import DomainEvent from '../../../Common/Domain/DomainEvent';
 import Email from '../ValueObjects/Email';
 
 export default class EmailUserVerify extends DomainEvent {

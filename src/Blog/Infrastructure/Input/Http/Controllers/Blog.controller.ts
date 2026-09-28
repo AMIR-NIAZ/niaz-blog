@@ -12,16 +12,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { PayloadGuard } from 'src/common/Infrastructure/Input/Payload.guard';
+import { PayloadGuard } from 'src/Common/Infrastructure/Input/Payload.guard';
 import { CreateBlogDto } from '../Dtos/CreateBlog.dto';
-import { AddBlogCommand } from 'src/Blog/Application/UseCases/Commands/AddBlog/addBlog.command';
+import { AddBlogCommand } from 'src/Blog/Application/UseCases/Commands/AddBlog/AddBlog.command';
 import { UpdateBlogDto } from '../Dtos/UpdateBlog.dto';
-import { UpdateBlogCommand } from 'src/Blog/Application/UseCases/Commands/UpdateBlog/updateBlog.command';
-import { DeleteBlogCommand } from 'src/Blog/Application/UseCases/Commands/DeleteBlog/deleteBlog.command';
-import { IsAutherBlogGuard } from '../Guards/IsAutherBlog.guard';
-import { ViewBlogQuery } from 'src/Blog/Application/UseCases/Queries/ViewBlog/viewBlog.query';
+import { UpdateBlogCommand } from 'src/Blog/Application/UseCases/Commands/UpdateBlog/UpdateBlog.command';
+import { DeleteBlogCommand } from 'src/Blog/Application/UseCases/Commands/DeleteBlog/DeleteBlog.command';
+import { IsAutherBlogGuard } from '../Guards/IsAuthorBlog.guard';
+import { ViewBlogQuery } from 'src/Blog/Application/UseCases/Queries/ViewBlog/ViewBlog.query';
 import BlogResponse from 'src/Blog/Application/Ports/Responses/Blog.response';
-import { GetAllBlogsQuery } from 'src/Blog/Application/UseCases/Queries/GetAllBlogs/getAllBlogs.query';
+import { GetAllBlogsQuery } from 'src/Blog/Application/UseCases/Queries/GetAllBlogs/GetAllBlogs.query';
 
 @Controller('blogs')
 export class BlogController {

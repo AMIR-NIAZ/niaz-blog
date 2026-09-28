@@ -1,5 +1,5 @@
-import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput.exception';
-import ValueObject from '../../../common/Domain/ValueObject';
+import NotValidInputException from '../../../Common/Domain/Exceptions/NotValidInput.exception';
+import ValueObject from '../../../Common/Domain/ValueObject';
 
 export enum UserRoleEnum {
   USER = 'user',

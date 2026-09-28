@@ -1,6 +1,6 @@
 import { CommandHandler } from '@nestjs/cqrs';
-import { DeleteBlogCommand } from './deleteBlog.command';
-import { DeleteBlog } from './deleteBlog';
+import { DeleteBlogCommand } from './DeleteBlog.command';
+import { DeleteBlog } from './DeleteBlog';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import { Inject } from '@nestjs/common';

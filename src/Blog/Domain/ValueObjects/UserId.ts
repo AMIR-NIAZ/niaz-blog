@@ -1,4 +1,4 @@
-import ValueObject from '../../../common/Domain/ValueObject';
+import ValueObject from '../../../Common/Domain/ValueObject';
 
 export default class UserId extends ValueObject<string> {
   static fromValid(value: string): UserId {

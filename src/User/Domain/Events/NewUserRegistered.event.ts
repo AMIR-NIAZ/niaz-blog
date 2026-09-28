@@ -1,4 +1,4 @@
-import DomainEvent from '../../../common/Domain/DomainEvent';
+import DomainEvent from '../../../Common/Domain/DomainEvent';
 import User from '../Entities/User';
 
 export default class NewUserRegistered extends DomainEvent {

@@ -1,4 +1,4 @@
-import DomainEvent from 'src/common/Domain/DomainEvent';
+import DomainEvent from 'src/Common/Domain/DomainEvent';
 import CommentId from '../ValueObjects/CommentId';
 import Comment from '../Entities/Comment';
 

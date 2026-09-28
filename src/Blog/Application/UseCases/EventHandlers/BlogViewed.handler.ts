@@ -1,6 +1,6 @@
 import { CommandBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import BlogViewed from 'src/Blog/Domain/Events/BlogViewed.event';
-import { IncrementViewCommand } from '../Commands/IncrementView/incrementView.command';
+import { IncrementViewCommand } from '../Commands/IncrementView/IncrementView.command';
 
 @EventsHandler(BlogViewed)
 export class BlogViewedHandler implements IEventHandler<BlogViewed> {

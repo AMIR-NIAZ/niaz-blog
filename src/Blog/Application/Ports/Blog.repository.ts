@@ -1,6 +1,6 @@
 import Blog from 'src/Blog/Domain/Entities/Blog';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
-import { Pagination } from 'src/common/Application/Pagination';
+import { Pagination } from 'src/Common/Application/Pagination';
 
 export const BlogRepository = Symbol('BlogRepository');
 export interface BlogRepository {

@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Blog from 'src/Blog/Domain/Entities/Blog';
-import CreateNewBlog from 'src/Blog/Domain/Events/CreateNewBlog.event';
-import UpdateBlog from 'src/Blog/Domain/Events/UpdateBlog.event';
+import CreateNewBlog from 'src/Blog/Domain/Events/BlogCreated.event';
+import UpdateBlog from 'src/Blog/Domain/Events/BlogUpdated.event';
 import { Repository } from 'typeorm';
 import BlogMapper from './Mapper/TypeOrmBlog.mapper';
 import { TypeOrmBlogEntity } from './TypeOrmBlog.entity';
-import DeleteBlog from 'src/Blog/Domain/Events/DeleteBlog.event';
+import DeleteBlog from 'src/Blog/Domain/Events/BlogDeleted.event';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
-import { Pagination } from 'src/common/Application/Pagination';
+import { Pagination } from 'src/Common/Application/Pagination';
 
 @Injectable()
 export class TypeOrmBlogRepository implements BlogRepository {

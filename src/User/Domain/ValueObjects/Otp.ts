@@ -1,4 +1,4 @@
-import ValueObject from '../../../common/Domain/ValueObject';
+import ValueObject from '../../../Common/Domain/ValueObject';
 
 export default class Otp extends ValueObject<string> {
   private static readonly REGEX = /^\d{5}$/;

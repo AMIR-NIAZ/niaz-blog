@@ -1,4 +1,4 @@
-import ValueObject from 'src/common/Domain/ValueObject';
+import ValueObject from 'src/Common/Domain/ValueObject';
 
 export default class Content extends ValueObject<string> {
   static fromInput(value: string) {

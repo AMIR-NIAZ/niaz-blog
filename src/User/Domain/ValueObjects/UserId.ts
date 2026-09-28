@@ -1,6 +1,6 @@
-import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput.exception';
-import UUID4 from '../../../common/Domain/UUID4';
-import ValueObject from '../../../common/Domain/ValueObject';
+import NotValidInputException from '../../../Common/Domain/Exceptions/NotValidInput.exception';
+import UUID4 from '../../../Common/Domain/UUID4';
+import ValueObject from '../../../Common/Domain/ValueObject';
 
 export default class UserId extends ValueObject<string> {
   public static fromInput(uuid: string) {

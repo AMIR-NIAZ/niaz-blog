@@ -1,14 +1,14 @@
-import AggregateRoot from 'src/common/Domain/AggregateRoot';
+import AggregateRoot from 'src/Common/Domain/AggregateRoot';
 import Title from '../ValueObjects/Title';
 import Content from '../ValueObjects/Content';
 import UserId from '../ValueObjects/UserId';
 import BlogId from '../ValueObjects/BlogId';
 import Comment from './Comment';
-import CreateNewBlog from '../Events/CreateNewBlog.event';
-import DeleteBlog from '../Events/DeleteBlog.event';
+import CreateNewBlog from '../Events/BlogCreated.event';
+import DeleteBlog from '../Events/BlogDeleted.event';
 import CommentText from '../ValueObjects/CommentText';
-import AddComment from '../Events/AddComment.event';
-import UpdateBlog from '../Events/UpdateBlog.event';
+import AddComment from '../Events/CommentAdded.event';
+import UpdateBlog from '../Events/BlogUpdated.event';
 import ViewCount from '../ValueObjects/ViewCount';
 
 export default class Blog extends AggregateRoot {

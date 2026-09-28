@@ -1,4 +1,4 @@
-import ValueObject from 'src/common/Domain/ValueObject';
+import ValueObject from 'src/Common/Domain/ValueObject';
 
 export default class Title extends ValueObject<string> {
   static readonly REGEX = /^(?=.*\S)[^<>]{3,150}$/;

@@ -2,11 +2,11 @@ import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RegisterCommand } from '../../../../Application/UseCases/Commands/Register/Register.command';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { VerifyEmailCommand } from 'src/User/Application/UseCases/Commands/VerifyEmail/VerifyEmail.commond';
-import { Tokens } from 'src/common/Application/Tokens';
+import { VerifyEmailCommand } from 'src/User/Application/UseCases/Commands/VerifyEmail/VerifyEmail.command';
+import { Tokens } from 'src/Common/Application/Tokens';
 import { LoginQuery } from 'src/User/Application/UseCases/Queries/Login/Login.query';
 import { RefreshTokenQuery } from 'src/User/Application/UseCases/Queries/RefreshToken/RefreshToken.query';
-import { RegisterDto } from '../Dtos/Reginster.dto';
+import { RegisterDto } from '../Dtos/Register.dto';
 import { VerifyEmailDto } from '../Dtos/VerifyEmail.dto';
 import { LoginDto } from '../Dtos/Login.dto';
 

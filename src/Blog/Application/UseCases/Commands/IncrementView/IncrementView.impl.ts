@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { IncrementViewCommand } from './incrementView.command';
-import { IncrementView } from './incrementView';
+import { IncrementViewCommand } from './IncrementView.command';
+import { IncrementView } from './IncrementView';
 import { Inject } from '@nestjs/common';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';

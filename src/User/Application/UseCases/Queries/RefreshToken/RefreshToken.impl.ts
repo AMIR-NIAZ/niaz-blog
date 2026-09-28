@@ -1,9 +1,9 @@
 import { QueryHandler } from '@nestjs/cqrs';
 import { RefreshTokenQuery } from './RefreshToken.query';
 import { RefreshToken } from './RefreshToken';
-import { TokenService } from 'src/common/Application/Output/Token.service';
+import { TokenService } from 'src/Common/Application/Output/Token.service';
 import { Inject } from '@nestjs/common';
-import { UserRepository } from 'src/User/Application/Ports/User.repsitory';
+import { UserRepository } from 'src/User/Application/Ports/User.repository';
 
 @QueryHandler(RefreshTokenQuery)
 export class RefreshTokenImpl implements RefreshToken {

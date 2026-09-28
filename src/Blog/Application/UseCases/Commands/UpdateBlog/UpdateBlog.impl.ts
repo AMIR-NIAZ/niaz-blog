@@ -1,6 +1,6 @@
 import { CommandHandler } from '@nestjs/cqrs';
-import { UpdateBlogCommand } from './updateBlog.command';
-import { UpdateBlog } from './updateBlog';
+import { UpdateBlogCommand } from './UpdateBlog.command';
+import { UpdateBlog } from './UpdateBlog';
 import Title from 'src/Blog/Domain/ValueObjects/Title';
 import Content from 'src/Blog/Domain/ValueObjects/Content';
 import { Inject } from '@nestjs/common';

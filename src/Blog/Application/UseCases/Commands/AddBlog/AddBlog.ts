@@ -1,4 +1,4 @@
 import { ICommandHandler } from '@nestjs/cqrs';
-import { AddBlogCommand } from './addBlog.command';
+import { AddBlogCommand } from './AddBlog.command';
 
 export interface AddBlog extends ICommandHandler<AddBlogCommand, void> {}

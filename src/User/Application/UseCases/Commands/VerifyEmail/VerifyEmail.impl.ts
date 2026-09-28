@@ -1,14 +1,14 @@
 import { Inject } from '@nestjs/common';
 import { VerifyEmail } from './VerifyEmail';
-import { VerifyEmailCommand } from './VerifyEmail.commond';
-import { CacheService } from 'src/common/Application/Output/Cache.service';
-import { HashService } from 'src/common/Application/Output/Hash.service';
-import { UserRepository } from 'src/User/Application/Ports/User.repsitory';
+import { VerifyEmailCommand } from './VerifyEmail.command';
+import { CacheService } from 'src/Common/Application/Output/Cache.service';
+import { HashService } from 'src/Common/Application/Output/Hash.service';
+import { UserRepository } from 'src/User/Application/Ports/User.repository';
 import Email from 'src/User/Domain/ValueObjects/Email';
 import Otp from 'src/User/Domain/ValueObjects/Otp';
-import { TokenService } from 'src/common/Application/Output/Token.service';
+import { TokenService } from 'src/Common/Application/Output/Token.service';
 import { CommandHandler } from '@nestjs/cqrs';
-import { Tokens } from 'src/common/Application/Tokens';
+import { Tokens } from 'src/Common/Application/Tokens';
 
 @CommandHandler(VerifyEmailCommand)
 export class VerifyEmailImpl implements VerifyEmail {

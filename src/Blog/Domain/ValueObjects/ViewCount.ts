@@ -1,4 +1,4 @@
-import ValueObject from 'src/common/Domain/ValueObject';
+import ValueObject from 'src/Common/Domain/ValueObject';
 
 export default class ViewCount extends ValueObject<number> {
   static readonly REGEX = /^[2-9]|[1-9]\d+$/;

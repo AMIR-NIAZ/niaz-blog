@@ -1,4 +1,4 @@
-import DomainEvent from 'src/common/Domain/DomainEvent';
+import DomainEvent from 'src/Common/Domain/DomainEvent';
 import Blog from '../Entities/Blog';
 
 export default class BlogViewed extends DomainEvent {

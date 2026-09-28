@@ -1,4 +1,4 @@
-import DomainEvent from 'src/common/Domain/DomainEvent';
+import DomainEvent from 'src/Common/Domain/DomainEvent';
 import BlogId from '../ValueObjects/BlogId';
 import UserId from '../ValueObjects/UserId';
 

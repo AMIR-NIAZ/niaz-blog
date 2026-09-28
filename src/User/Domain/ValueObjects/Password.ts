@@ -1,5 +1,5 @@
-import NotValidInputException from '../../../common/Domain/Exceptions/NotValidInput.exception';
-import ValueObject from '../../../common/Domain/ValueObject';
+import NotValidInputException from '../../../Common/Domain/Exceptions/NotValidInput.exception';
+import ValueObject from '../../../Common/Domain/ValueObject';
 
 export default class Password extends ValueObject<string> {
   static readonly REGEX = /^[a-zA-Z0-9_.]{3,20}$/;

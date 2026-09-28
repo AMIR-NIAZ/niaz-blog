@@ -7,12 +7,12 @@ import Password from '../../../../Domain/ValueObjects/Password';
 import Email from '../../../../Domain/ValueObjects/Email';
 import { RegisterCommand } from './Register.command';
 import { Register } from './Register';
-import { UserRepository } from '../../../Ports/User.repsitory';
-import AlreadyExistsException from '../../../../../common/Domain/Exceptions/AlreadyExists.exception';
-import { HashService } from '../../../../../common/Application/Output/Hash.service';
-import { Publisher } from '../../../../../common/Application/Output/Publisher.service';
+import { UserRepository } from '../../../Ports/User.repository';
+import AlreadyExistsException from '../../../../../Common/Domain/Exceptions/AlreadyExists.exception';
+import { HashService } from '../../../../../Common/Application/Output/Hash.service';
+import { Publisher } from '../../../../../Common/Application/Output/Publisher.service';
 import NewUserRegistered from 'src/User/Domain/Events/NewUserRegistered.event';
-import { CacheService } from 'src/common/Application/Output/Cache.service';
+import { CacheService } from 'src/Common/Application/Output/Cache.service';
 import Otp from 'src/User/Domain/ValueObjects/Otp';
 import Role from 'src/User/Domain/ValueObjects/Role';
 

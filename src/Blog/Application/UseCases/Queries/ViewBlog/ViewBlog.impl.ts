@@ -1,6 +1,6 @@
 import { EventBus, QueryHandler } from '@nestjs/cqrs';
-import { ViewBlogQuery } from './viewBlog.query';
-import { ViewBlog } from './viewBlog';
+import { ViewBlogQuery } from './ViewBlog.query';
+import { ViewBlog } from './ViewBlog';
 import { Inject } from '@nestjs/common';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
