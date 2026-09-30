@@ -15,6 +15,7 @@ export class ViewBlogImpl implements ViewBlog {
     private readonly blogRepository: BlogRepository,
     private readonly eventBus: EventBus,
   ) {}
+
   async execute(query: ViewBlogQuery): Promise<BlogResponse> {
     const blogId = BlogId.fromInput(query.blogId);
 

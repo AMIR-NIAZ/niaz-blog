@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { PayloadGuard } from 'src/Common/Infrastructure/Input/Payload.guard';
+import { PayloadGuard } from 'src/Common/Infrastructure/Input/Guards/Payload.guard';
 import { CreateBlogDto } from '../Dtos/CreateBlog.dto';
 import { AddBlogCommand } from 'src/Blog/Application/UseCases/Commands/AddBlog/AddBlog.command';
 import { UpdateBlogDto } from '../Dtos/UpdateBlog.dto';
@@ -22,6 +22,9 @@ import { IsAutherBlogGuard } from '../Guards/IsAuthorBlog.guard';
 import { ViewBlogQuery } from 'src/Blog/Application/UseCases/Queries/ViewBlog/ViewBlog.query';
 import BlogResponse from 'src/Blog/Application/Ports/Responses/Blog.response';
 import { GetAllBlogsQuery } from 'src/Blog/Application/UseCases/Queries/GetAllBlogs/GetAllBlogs.query';
+import { CurrentUser } from 'src/Common/Infrastructure/Input/Decorators/CurrentUser.decorator';
+import { CreateCommentDto } from '../Dtos/CreateComment.dto';
+import { AddCommentCommand } from 'src/Blog/Application/UseCases/Commands/AddComment/AddComment.command';
 
 @Controller('blogs')
 export class BlogController {
@@ -32,9 +35,9 @@ export class BlogController {
 
   @Post()
   @UseGuards(PayloadGuard)
-  async createBlog(@Body() dto: CreateBlogDto) {
+  async createBlog(@Body() dto: CreateBlogDto, @CurrentUser() userId: string) {
     await this.commandBus.execute<AddBlogCommand, void>(
-      new AddBlogCommand(dto.title, dto.content, dto.userId),
+      new AddBlogCommand(dto.title, dto.content, userId),
     );
 
     return { message: 'blog create successfully' };
@@ -77,5 +80,19 @@ export class BlogController {
     return await this.queryBus.execute<ViewBlogQuery, BlogResponse>(
       new ViewBlogQuery(blogId),
     );
+  }
+
+  @Post(':blogId/comments')
+  @UseGuards(PayloadGuard)
+  async addNewComment(
+    @Param('blogId') blogId: string,
+    @CurrentUser() userId: string,
+    @Body() dto: CreateCommentDto,
+  ) {
+    await this.commandBus.execute<AddCommentCommand, void>(
+      new AddCommentCommand(dto.text, blogId, userId),
+    );
+
+    return { message: 'add comment successfully' };
   }
 }

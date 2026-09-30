@@ -1,7 +1,4 @@
-import { AddBlogCommand } from 'src/Blog/Application/UseCases/Commands/AddBlog/AddBlog.command';
-
-export class CreateBlogDto implements AddBlogCommand {
+export class CreateBlogDto {
   title: string;
   content: string;
-  userId: string;
 }

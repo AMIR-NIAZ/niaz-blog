@@ -1,5 +1,4 @@
 import DomainEvent from 'src/Common/Domain/DomainEvent';
-import CommentId from '../ValueObjects/CommentId';
 import Comment from '../Entities/Comment';
 
 export default class AddComment extends DomainEvent {

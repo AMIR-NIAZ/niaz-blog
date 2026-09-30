@@ -5,6 +5,7 @@ import Email from '../../../../../Domain/ValueObjects/Email';
 import UserNsme from '../../../../../Domain/ValueObjects/UserName';
 import Role from 'src/User/Domain/ValueObjects/Role';
 import { TypeOrmUserEntity } from '../TypeOrmUser.entity';
+import UserResponse from 'src/User/Application/Ports/Responses/user.response';
 
 export default class UserMapper {
   static toDomain(model: TypeOrmUserEntity): User {
@@ -34,5 +35,17 @@ export default class UserMapper {
       updatedAt: user.updatedAt,
     };
     return model;
+  }
+
+  static toResponse(user: TypeOrmUserEntity): UserResponse {
+    return new UserResponse(
+      user.id,
+      user.username,
+      user.email,
+      user.emailVerified,
+      user.role,
+      user.createdAt,
+      user.updatedAt,
+    );
   }
 }

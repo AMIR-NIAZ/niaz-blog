@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler } from '@nestjs/cqrs';
 import { IncrementViewCommand } from './IncrementView.command';
 import { IncrementView } from './IncrementView';
 import { Inject } from '@nestjs/common';

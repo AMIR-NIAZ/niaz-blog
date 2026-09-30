@@ -19,6 +19,7 @@ import { BlogViewedHandler } from './Application/UseCases/EventHandlers/BlogView
 import { GetAllBlogsImpl } from './Application/UseCases/Queries/GetAllBlogs/GetAllBlogs.impl';
 import { TypeOrmUserEntity } from 'src/User/Infrastructure/Output/Persistence/TypeOrm/TypeOrmUser.entity';
 import { TypeOrmUserRepository } from 'src/User/Infrastructure/Output/Persistence/TypeOrm/TypeOrmUser.repository';
+import { AddCommentImpl } from './Application/UseCases/Commands/AddComment/AddComment.impl';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { TypeOrmUserRepository } from 'src/User/Infrastructure/Output/Persistenc
     BlogViewedHandler,
     IncrementViewImpl,
     GetAllBlogsImpl,
+    AddCommentImpl,
   ],
 })
 export class BlogModule {}
