@@ -14,6 +14,7 @@ import AddComment from 'src/Blog/Domain/Events/CommentAdded.event';
 import Comment from 'src/Blog/Domain/Entities/Comment';
 import { TypeOrmCommentEntity } from './TypeOrmComment.entity';
 import CommentMapper from './Mapper/TypeOrmComment.mapper';
+import CommentEdited from 'src/Blog/Domain/Events/CommentEdited.event';
 
 @Injectable()
 export class TypeOrmBlogRepository implements BlogRepository {
@@ -22,7 +23,7 @@ export class TypeOrmBlogRepository implements BlogRepository {
     private readonly blogRepository: Repository<TypeOrmBlogEntity>,
     @InjectRepository(TypeOrmCommentEntity)
     private readonly commentRepository: Repository<TypeOrmCommentEntity>,
-  ) {}
+  ) { }
 
   async save(blog: Blog): Promise<void> {
     const events = blog.getEvents();
@@ -42,6 +43,15 @@ export class TypeOrmBlogRepository implements BlogRepository {
 
       if (event instanceof AddComment) {
         await this.addComment(
+          blog.id,
+          blog.comments.find(
+            (comment) => comment.id.getValue === event.commentId,
+          )!,
+        );
+      }
+
+      if (event instanceof CommentEdited) {
+        await this.updateComment(
           blog.id,
           blog.comments.find(
             (comment) => comment.id.getValue === event.commentId,
@@ -112,6 +122,12 @@ export class TypeOrmBlogRepository implements BlogRepository {
   }
 
   private async addComment(blogId: BlogId, comment: Comment) {
+    const commentDocument = CommentMapper.toPersistence(comment, blogId);
+
+    await this.commentRepository.save(commentDocument);
+  }
+
+  private async updateComment(blogId: BlogId, comment: Comment) {
     const commentDocument = CommentMapper.toPersistence(comment, blogId);
 
     await this.commentRepository.save(commentDocument);

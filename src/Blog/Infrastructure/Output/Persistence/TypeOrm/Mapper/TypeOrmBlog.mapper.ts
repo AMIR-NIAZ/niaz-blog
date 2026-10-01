@@ -3,7 +3,7 @@ import { TypeOrmBlogEntity } from '../TypeOrmBlog.entity';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import Title from 'src/Blog/Domain/ValueObjects/Title';
 import Content from 'src/Blog/Domain/ValueObjects/Content';
-import UserId from 'src/Blog/Domain/ValueObjects/UserId';
+import UserId from 'src/User/Domain/ValueObjects/UserId';
 import CommentText from 'src/Blog/Domain/ValueObjects/CommentText';
 import CommentId from 'src/Blog/Domain/ValueObjects/CommentId';
 import { TypeOrmCommentEntity } from '../TypeOrmComment.entity';

@@ -22,4 +22,8 @@ export default class Comment extends Entity {
     this.text = text;
     this.updatedAt = new Date();
   }
+
+  public isOwnedBy(userId: UserId): boolean {
+    return this.userId.equals(userId);
+  }
 }

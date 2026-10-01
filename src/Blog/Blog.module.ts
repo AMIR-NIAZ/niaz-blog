@@ -20,6 +20,7 @@ import { GetAllBlogsImpl } from './Application/UseCases/Queries/GetAllBlogs/GetA
 import { TypeOrmUserEntity } from 'src/User/Infrastructure/Output/Persistence/TypeOrm/TypeOrmUser.entity';
 import { TypeOrmUserRepository } from 'src/User/Infrastructure/Output/Persistence/TypeOrm/TypeOrmUser.repository';
 import { AddCommentImpl } from './Application/UseCases/Commands/AddComment/AddComment.impl';
+import { UpdateCommentImpl } from './Application/UseCases/Commands/UpdateComment/UpdateComment.impl';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { AddCommentImpl } from './Application/UseCases/Commands/AddComment/AddCo
     IncrementViewImpl,
     GetAllBlogsImpl,
     AddCommentImpl,
+    UpdateCommentImpl
   ],
 })
 export class BlogModule {}

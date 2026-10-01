@@ -1,7 +1,6 @@
 import AggregateRoot from 'src/Common/Domain/AggregateRoot';
 import Title from '../ValueObjects/Title';
 import Content from '../ValueObjects/Content';
-import UserId from '../ValueObjects/UserId';
 import BlogId from '../ValueObjects/BlogId';
 import Comment from './Comment';
 import CreateNewBlog from '../Events/BlogCreated.event';
@@ -10,6 +9,9 @@ import CommentText from '../ValueObjects/CommentText';
 import AddComment from '../Events/CommentAdded.event';
 import UpdateBlog from '../Events/BlogUpdated.event';
 import ViewCount from '../ValueObjects/ViewCount';
+import CommentId from '../ValueObjects/CommentId';
+import CommentEdited from '../Events/CommentEdited.event';
+import UserId from 'src/User/Domain/ValueObjects/UserId';
 
 export default class Blog extends AggregateRoot {
   constructor(
@@ -60,10 +62,18 @@ export default class Blog extends AggregateRoot {
     this.addEvent(AddComment.of(comment));
   }
 
-  // updateComment(text: CommentText) {
-  // const comment = Comment.create(text)
-  // this.comments.push(comment)
+  editComment(commentId: CommentId, editorId: UserId, newText: CommentText) {
+    const comment = this.comments.find((c) => c.id.equals(commentId));
 
-  // this.addEvent(AddComment.of(comment))
-  // }
+    console.log(comment?.userId.getValue, typeof comment?.userId.getValue);
+    console.log(editorId.getValue, typeof editorId.getValue);
+    console.log(comment?.userId.constructor === editorId.constructor);
+    console.log(comment?.userId.constructor.name, editorId.constructor.name);
+    if (!comment) throw new Error("aa");
+    if (!comment.isOwnedBy(editorId)) throw new Error("bb");
+    if (comment.text.equals(newText)) return; // if not changed dont send Event
+
+    comment.edit(newText);
+    this.addEvent(CommentEdited.of(commentId));
+  }
 }

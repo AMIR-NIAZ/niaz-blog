@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Put,
   Query,
@@ -25,13 +26,15 @@ import { GetAllBlogsQuery } from 'src/Blog/Application/UseCases/Queries/GetAllBl
 import { CurrentUser } from 'src/Common/Infrastructure/Input/Decorators/CurrentUser.decorator';
 import { CreateCommentDto } from '../Dtos/CreateComment.dto';
 import { AddCommentCommand } from 'src/Blog/Application/UseCases/Commands/AddComment/AddComment.command';
+import { EditCommentDto } from '../Dtos/EditComment.dto';
+import { UpdateCommentCommand } from 'src/Blog/Application/UseCases/Commands/UpdateComment/UpdateComment.command';
 
 @Controller('blogs')
 export class BlogController {
   public constructor(
     private commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) { }
 
   @Post()
   @UseGuards(PayloadGuard)
@@ -94,5 +97,20 @@ export class BlogController {
     );
 
     return { message: 'add comment successfully' };
+  }
+
+  @Patch(':blogId/comments/:commentId')
+  @UseGuards(PayloadGuard)
+  async editComment(
+    @Param('blogId') blogId: string,
+    @Param('commentId') commentId: string,
+    @Body() dto: EditCommentDto,
+    @CurrentUser() userId: string,
+  ) {
+    await this.commandBus.execute(
+      new UpdateCommentCommand(dto.text, blogId, commentId, userId),
+    );
+
+    return { message: 'update comment successfully' };
   }
 }
