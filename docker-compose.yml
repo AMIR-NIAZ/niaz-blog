@@ -1,23 +1,15 @@
 services:
-
-  # =========================
-  # RabbitMQ
-  # =========================
   rabbitmq:
     image: rabbitmq:4-management
     container_name: rabbitmq
-
     ports:
       - "5672:5672"
       - "15672:15672"
-
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
-
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       interval: 5s
@@ -25,53 +17,34 @@ services:
       retries: 10
       start_period: 10s
 
-
-  # =========================
-  # PostgreSQL
-  # =========================
   postgres:
     image: postgres:18
     container_name: postgres
-
     ports:
       - "5432:5432"
-
     environment:
       POSTGRES_DB: niaz_blog
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-
     volumes:
       - postgres_data:/var/lib/postgresql
-
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -U postgres -d niaz_blog"
-        ]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d niaz_blog"]
       interval: 5s
       timeout: 5s
       retries: 10
       start_period: 10s
 
-
-  # =========================
-  # Application
-  # =========================
   app:
     build:
       context: .
       dockerfile: Dockerfile
-
     container_name: niaz-blog
-
+    command: npm run start:dev
     ports:
       - "3000:3000"
-
     env_file:
       - .env
-
     develop:
       watch:
         - action: sync
@@ -79,15 +52,12 @@ services:
           target: /app/src
         - action: rebuild
           path: package.json
-
     depends_on:
       postgres:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
-# =========================
-# Volumes
-# =========================
+
 volumes:
   postgres_data:
   rabbitmq_data:
