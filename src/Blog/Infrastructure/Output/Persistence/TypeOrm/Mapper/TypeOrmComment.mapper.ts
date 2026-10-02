@@ -2,10 +2,10 @@
 import Comment from 'src/Blog/Domain/Entities/Comment';
 import CommentId from 'src/Blog/Domain/ValueObjects/CommentId';
 import CommentText from 'src/Blog/Domain/ValueObjects/CommentText';
-import UserId from 'src/Blog/Domain/ValueObjects/UserId';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import { CommentResponse } from 'src/Blog/Application/Ports/Responses/Comment.response';
 import { TypeOrmCommentEntity } from '../TypeOrmComment.entity';
+import UserId from 'src/User/Domain/ValueObjects/UserId';
 
 export default class CommentMapper {
   static toDomain(model: TypeOrmCommentEntity): Comment {

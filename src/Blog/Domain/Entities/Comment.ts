@@ -1,7 +1,7 @@
 import Entity from 'src/Common/Domain/Entity';
 import CommentId from '../ValueObjects/CommentId';
 import CommentText from '../ValueObjects/CommentText';
-import UserId from '../ValueObjects/UserId';
+import UserId from 'src/User/Domain/ValueObjects/UserId';
 
 export default class Comment extends Entity {
   constructor(

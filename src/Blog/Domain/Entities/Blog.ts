@@ -15,6 +15,7 @@ import UserId from 'src/User/Domain/ValueObjects/UserId';
 import CommentDeleted from '../Events/CommentDeleted.event';
 import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
 import ForbiddenException from 'src/Common/Domain/Exceptions/Forbidden.exception';
+import Role from 'src/User/Domain/ValueObjects/Role';
 
 export default class Blog extends AggregateRoot {
   constructor(
@@ -40,21 +41,36 @@ export default class Blog extends AggregateRoot {
     return blog;
   }
 
-  update(title: Title, content: Content) {
+  update(title: Title, content: Content, userId: UserId) {
+    if (!this.isOwnedBy(userId))
+      throw new ForbiddenException('You can only update your own blog');
+
     this.title = title;
     this.content = content;
+    this.updatedAt = new Date();
 
     this.addEvent(UpdateBlog.of(this));
   }
 
-  delete() {
+  delete(userId: UserId, role: Role) {
+    if (!this.isOwnedBy(userId) && !role.isManager()) {
+      throw new ForbiddenException(
+        'You can only delete your own blog unless you are a manager',
+      );
+    }
+
     this.addEvent(DeleteBlog.of(this));
   }
-
   incrementView() {
     this.viewCount = ViewCount.fromValid(this.viewCount.getValue + 1);
 
+    this.updatedAt = new Date();
+
     this.addEvent(UpdateBlog.of(this));
+  }
+
+  isOwnedBy(userId: UserId): boolean {
+    return this.userId.equals(userId);
   }
 
   // aggregate methods
@@ -77,14 +93,18 @@ export default class Blog extends AggregateRoot {
     this.addEvent(CommentEdited.of(commentId));
   }
 
-  deleteComment(commentId: CommentId, editorId: UserId) {
-    const comment = this.comments.find((comment) =>
-      comment.id.equals(commentId),
-    );
+  deleteComment(commentId: CommentId, editorId: UserId, role: Role) {
+    const comment = this.comments.find((c) => c.id.equals(commentId));
 
     if (!comment) throw new NotFoundException('comment not found');
-    if (!comment.isOwnedBy(editorId))
-      throw new ForbiddenException('You can only delete your own comments');
+
+    if (!comment.isOwnedBy(editorId) && !role.isManager())
+      throw new ForbiddenException(
+        'You can only delete your own comments unless you are a manager',
+      );
+
+    this.comments = this.comments.filter((c) => !c.id.equals(commentId));
+    this.updatedAt = new Date();
 
     this.addEvent(CommentDeleted.of(comment));
   }

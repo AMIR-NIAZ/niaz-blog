@@ -7,6 +7,7 @@ import { DeleteComment } from './DeleteComment';
 import CommentId from 'src/Blog/Domain/ValueObjects/CommentId';
 import UserId from 'src/User/Domain/ValueObjects/UserId';
 import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
+import Role from 'src/User/Domain/ValueObjects/Role';
 
 @CommandHandler(DeleteCommentCommand)
 export class DeleteCommentImpl implements DeleteComment {
@@ -18,12 +19,13 @@ export class DeleteCommentImpl implements DeleteComment {
   async execute(command: DeleteCommentCommand): Promise<void> {
     const blogId = BlogId.fromValid(command.blogId);
     const commentId = CommentId.fromValid(command.commentId);
-    const userId = UserId.fromValid(command.userId);
+    const userId = UserId.fromValid(command.user.sub);
+    const userRole = Role.fromInput(command.user.role)
 
     const blog = await this.blogRepository.loadById(blogId);
     if (!blog) throw new NotFoundException('blog not Found');
 
-    blog.deleteComment(commentId, userId);
+    blog.deleteComment(commentId, userId, userRole);
 
     await this.blogRepository.save(blog);
   }

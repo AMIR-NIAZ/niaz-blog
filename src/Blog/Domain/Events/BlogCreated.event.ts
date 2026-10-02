@@ -1,6 +1,6 @@
 import DomainEvent from 'src/Common/Domain/DomainEvent';
 import BlogId from '../ValueObjects/BlogId';
-import UserId from '../ValueObjects/UserId';
+import UserId from 'src/User/Domain/ValueObjects/UserId';
 
 export default class CreateNewBlog extends DomainEvent {
   constructor(

@@ -15,6 +15,6 @@ export const CurrentUser = createParamDecorator(
       throw new UnauthorizedException();
     }
 
-    return user.sub;
+    return user;
   },
 );

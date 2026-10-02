@@ -6,9 +6,12 @@ import {
 } from '@nestjs/common';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
-import UserId from 'src/Blog/Domain/ValueObjects/UserId';
 import { Payload } from 'src/Common/Application/Payload';
 import ForbiddenException from 'src/Common/Domain/Exceptions/Forbidden.exception';
+import { InValidOperationException } from 'src/Common/Domain/Exceptions/InvalidOperation.exception';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
+import Role from 'src/User/Domain/ValueObjects/Role';
+import UserId from 'src/User/Domain/ValueObjects/UserId';
 
 @Injectable()
 export class IsAutherBlogGuard implements CanActivate {
@@ -23,10 +26,14 @@ export class IsAutherBlogGuard implements CanActivate {
     const userId = UserId.fromValid(user.sub);
 
     const blogId = BlogId.fromInput(request.params['blogId'] as string);
-    if (!blogId) throw new ForbiddenException('blogid invalid');
+    if (!blogId) throw new InValidOperationException('blogid invalid');
 
     const blog = await this.blogRepository.loadById(blogId);
-    if (!blog) throw new ForbiddenException('blog not find');
+    if (!blog) throw new NotFoundException('blog not find');
+    
+    if (user.sub === Role.manager().getValue)
+      return true
+
     if (!blog.userId.equals(userId))
       throw new ForbiddenException('user not auther this blog');
 
