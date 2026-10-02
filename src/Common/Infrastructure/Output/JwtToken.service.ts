@@ -1,9 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Payload } from '../../Application/Payload';
 import { TokenService } from '../../Application/Output/Token.service';
 import User from 'src/User/Domain/Entities/User';
+import UnauthorizedException from 'src/Common/Domain/Exceptions/Unauthorized.exception';
 
 @Injectable()
 export class JwtAppService implements TokenService {
@@ -21,7 +22,7 @@ export class JwtAppService implements TokenService {
 
       return payload;
     } catch (error) {
-      throw new UnauthorizedException(error);
+      throw new UnauthorizedException();
     }
   }
 
@@ -45,7 +46,7 @@ export class JwtAppService implements TokenService {
 
       return payload;
     } catch (error) {
-      throw new UnauthorizedException(error);
+      throw new UnauthorizedException();
     }
   }
 

@@ -1,7 +1,6 @@
 import {
   CanActivate,
   ExecutionContext,
-  ForbiddenException,
   Inject,
   Injectable,
 } from '@nestjs/common';
@@ -9,6 +8,7 @@ import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import UserId from 'src/Blog/Domain/ValueObjects/UserId';
 import { Payload } from 'src/Common/Application/Payload';
+import ForbiddenException from 'src/Common/Domain/Exceptions/Forbidden.exception';
 
 @Injectable()
 export class IsAutherBlogGuard implements CanActivate {

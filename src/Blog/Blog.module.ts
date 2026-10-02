@@ -56,7 +56,7 @@ import { DeleteCommentImpl } from './Application/UseCases/Commands/DeleteComment
     GetAllBlogsImpl,
     AddCommentImpl,
     UpdateCommentImpl,
-    DeleteCommentImpl
+    DeleteCommentImpl,
   ],
 })
 export class BlogModule {}

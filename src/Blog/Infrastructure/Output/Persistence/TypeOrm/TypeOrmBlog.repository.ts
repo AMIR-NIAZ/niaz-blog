@@ -24,7 +24,7 @@ export class TypeOrmBlogRepository implements BlogRepository {
     private readonly blogRepository: Repository<TypeOrmBlogEntity>,
     @InjectRepository(TypeOrmCommentEntity)
     private readonly commentRepository: Repository<TypeOrmCommentEntity>,
-  ) { }
+  ) {}
 
   async save(blog: Blog): Promise<void> {
     const events = blog.getEvents();
@@ -61,7 +61,7 @@ export class TypeOrmBlogRepository implements BlogRepository {
       }
 
       if (event instanceof CommentDeleted) {
-        this.DeleteCommentCommand(event.commentId)
+        this.DeleteCommentCommand(event.commentId);
       }
     }
   }
@@ -139,6 +139,6 @@ export class TypeOrmBlogRepository implements BlogRepository {
   }
 
   private async DeleteCommentCommand(commentId: string) {
-    await this.commentRepository.delete(commentId)
+    await this.commentRepository.delete(commentId);
   }
 }

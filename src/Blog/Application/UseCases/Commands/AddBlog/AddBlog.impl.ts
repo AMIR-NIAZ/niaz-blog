@@ -5,7 +5,7 @@ import { AddBlog } from './AddBlog';
 import { AddBlogCommand } from './AddBlog.command';
 import { Inject } from '@nestjs/common';
 import { UserRepository } from 'src/User/Application/Ports/User.repository';
-import { NotFoundException } from 'src/Common/Domain/Exceptions/NotFound.exception';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
 import Blog from 'src/Blog/Domain/Entities/Blog';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import { CommandHandler } from '@nestjs/cqrs';

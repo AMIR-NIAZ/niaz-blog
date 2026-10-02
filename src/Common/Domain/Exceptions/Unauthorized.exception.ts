@@ -1,7 +1,7 @@
 import Exception from './Exception';
 
-export class UnauthorizedException extends Exception {
-  constructor() {
-    super('UnauthorizedException');
+export default class UnauthorizedException extends Exception {
+  constructor(public message = 'UnauthorizedException') {
+    super(message);
   }
 }

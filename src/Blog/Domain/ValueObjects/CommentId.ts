@@ -9,7 +9,7 @@ export default class CommentId extends ValueObject<string> {
     if (!UUID4.isValid(trimUUID))
       throw new NotValidInputException('id invalid');
 
-    return new CommentId(value)
+    return new CommentId(value);
   }
 
   static create(): CommentId {

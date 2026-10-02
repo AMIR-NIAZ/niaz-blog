@@ -9,7 +9,7 @@ export default class UserId extends ValueObject<string> {
     if (!UUID4.isValid(trimUUID))
       throw new NotValidInputException('id invalid');
 
-    return new UserId(value)
+    return new UserId(value);
   }
 
   static create(): UserId {

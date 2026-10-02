@@ -4,6 +4,7 @@ import { DeleteBlog } from './DeleteBlog';
 import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import { BlogRepository } from 'src/Blog/Application/Ports/Blog.repository';
 import { Inject } from '@nestjs/common';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
 
 @CommandHandler(DeleteBlogCommand)
 export class DeleteBlogImpl implements DeleteBlog {
@@ -16,7 +17,7 @@ export class DeleteBlogImpl implements DeleteBlog {
     const id = BlogId.fromValid(command.blogId);
 
     const blog = await this.blogRepository.loadById(id);
-    if (!blog) throw new Error();
+    if (!blog) throw new NotFoundException('blog not found');
 
     blog.delete();
 

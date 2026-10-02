@@ -7,6 +7,7 @@ import BlogId from 'src/Blog/Domain/ValueObjects/BlogId';
 import BlogMapper from 'src/Blog/Infrastructure/Output/Persistence/TypeOrm/Mapper/TypeOrmBlog.mapper';
 import BlogResponse from 'src/Blog/Application/Ports/Responses/Blog.response';
 import BlogViewed from 'src/Blog/Domain/Events/BlogViewed.event';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
 
 @QueryHandler(ViewBlogQuery)
 export class ViewBlogImpl implements ViewBlog {
@@ -20,7 +21,7 @@ export class ViewBlogImpl implements ViewBlog {
     const blogId = BlogId.fromInput(query.blogId);
 
     const blog = await this.blogRepository.loadById(blogId);
-    if (!blog) throw new Error('blog Not Find');
+    if (!blog) throw new NotFoundException('blog not found');
 
     this.eventBus.publish(BlogViewed.of(blog));
 

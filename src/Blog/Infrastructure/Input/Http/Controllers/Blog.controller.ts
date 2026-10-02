@@ -35,7 +35,7 @@ export class BlogController {
   public constructor(
     private commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) { }
+  ) {}
 
   @Post()
   @UseGuards(PayloadGuard)

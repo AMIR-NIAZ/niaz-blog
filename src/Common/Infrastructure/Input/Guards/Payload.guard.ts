@@ -3,9 +3,9 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { TokenService } from '../../../Application/Output/Token.service';
+import UnauthorizedException from 'src/Common/Domain/Exceptions/Unauthorized.exception';
 
 @Injectable()
 export class PayloadGuard implements CanActivate {

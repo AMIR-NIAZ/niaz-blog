@@ -1,3 +1,4 @@
+import NotValidInputException from 'src/Common/Domain/Exceptions/NotValidInput.exception';
 import ValueObject from '../../../Common/Domain/ValueObject';
 
 export default class Otp extends ValueObject<string> {
@@ -11,7 +12,7 @@ export default class Otp extends ValueObject<string> {
 
   static fromInput(value: string): Otp {
     if (!Otp.REGEX.test(value)) {
-      throw new Error('invalid otp');
+      throw new NotValidInputException('otp must be length is 5');
     }
 
     return new Otp(value);

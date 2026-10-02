@@ -8,6 +8,8 @@ import { Inject } from '@nestjs/common';
 import { HashService } from 'src/Common/Application/Output/Hash.service';
 import { TokenService } from 'src/Common/Application/Output/Token.service';
 import Password from 'src/User/Domain/ValueObjects/Password';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
+import UnauthorizedException from 'src/Common/Domain/Exceptions/Unauthorized.exception';
 
 @QueryHandler(LoginQuery)
 export class LoginImpl implements Login {
@@ -25,13 +27,14 @@ export class LoginImpl implements Login {
     const password = Password.fromInput(query.password);
 
     const user = await this.userRepository.loadByEmail(email);
-    if (!user) throw new Error();
+    if (!user) throw new NotFoundException('user not found');
 
     const isPasswordEquals = await this.hashService.compare(
       user.password.getValue,
       password.getValue,
     );
-    if (!isPasswordEquals) throw new Error();
+    if (!isPasswordEquals)
+      throw new UnauthorizedException('Invalid email or password');
 
     const accessToken = await this.tokenRepository.generateAccessToken(user);
     const refreshToken = await this.tokenRepository.generateRefreshToken(user);

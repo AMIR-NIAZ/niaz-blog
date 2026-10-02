@@ -9,6 +9,9 @@ import Otp from 'src/User/Domain/ValueObjects/Otp';
 import { TokenService } from 'src/Common/Application/Output/Token.service';
 import { CommandHandler } from '@nestjs/cqrs';
 import { Tokens } from 'src/Common/Application/Tokens';
+import { InValidOperationException } from 'src/Common/Domain/Exceptions/InvalidOperation.exception';
+import NotValidInputException from 'src/Common/Domain/Exceptions/NotValidInput.exception';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
 
 @CommandHandler(VerifyEmailCommand)
 export class VerifyEmailImpl implements VerifyEmail {
@@ -22,25 +25,27 @@ export class VerifyEmailImpl implements VerifyEmail {
     @Inject(TokenService)
     private readonly tokenRepository: TokenService,
   ) {}
+
   async execute(command: VerifyEmailCommand): Promise<Tokens> {
     const email = Email.fromInput(command.email);
     const otpObject = Otp.fromInput(command.otp);
+    const key = `email:${email.getValue}`;
 
-    const otp = (await this.cacheService.get(
-      `email:${email.getValue}`,
-    )) as string;
-    if (!otp) throw new Error('otp expired');
-    await this.cacheService.del(`email:${email.getValue}`);
+    const hashedOtp = (await this.cacheService.get(key)) as string | null;
+    if (!hashedOtp) throw new InValidOperationException('OTP has expired');
 
-    const isOtpEquals = await this.hashService.compare(otp, otpObject.getValue);
-    if (!isOtpEquals) throw new Error('otp not eqluals');
+    const isOtpValid = await this.hashService.compare(
+      hashedOtp,
+      otpObject.getValue,
+    );
+    if (!isOtpValid) throw new NotValidInputException('OTP is incorrect');
 
     const user = await this.userRepository.loadByEmail(email);
-    if (!user) throw new Error('user not fine');
+    if (!user) throw new NotFoundException('User not found');
 
     user.confirmEmail();
-
     await this.userRepository.VerifyEmail(user);
+    await this.cacheService.del(key);
 
     const accessToken = await this.tokenRepository.generateAccessToken(user);
     const refreshToken = await this.tokenRepository.generateRefreshToken(user);

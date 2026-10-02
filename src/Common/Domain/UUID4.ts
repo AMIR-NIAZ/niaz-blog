@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import ValueObject from './ValueObject';
+import NotValidInputException from './Exceptions/NotValidInput.exception';
 
 export default class UUID4 extends ValueObject<string> {
   static readonly REGEX =
@@ -7,7 +8,7 @@ export default class UUID4 extends ValueObject<string> {
 
   constructor(value: string) {
     if (!UUID4.isValid(value)) {
-      throw new Error('Invalid UUID v4');
+      throw new NotValidInputException('Invalid UUID v4');
     }
 
     super(value);

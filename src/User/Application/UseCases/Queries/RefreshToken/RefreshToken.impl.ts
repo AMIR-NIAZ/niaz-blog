@@ -4,6 +4,7 @@ import { RefreshToken } from './RefreshToken';
 import { TokenService } from 'src/Common/Application/Output/Token.service';
 import { Inject } from '@nestjs/common';
 import { UserRepository } from 'src/User/Application/Ports/User.repository';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
 
 @QueryHandler(RefreshTokenQuery)
 export class RefreshTokenImpl implements RefreshToken {
@@ -20,7 +21,7 @@ export class RefreshTokenImpl implements RefreshToken {
     );
 
     const user = await this.userRepository.loadById(payload.sub);
-    if (!user) throw new Error();
+    if (!user) throw new NotFoundException('user not found');
 
     const accessToken: string =
       await this.tokenRepository.generateAccessToken(user);

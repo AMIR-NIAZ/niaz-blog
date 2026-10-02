@@ -13,6 +13,8 @@ import CommentId from '../ValueObjects/CommentId';
 import CommentEdited from '../Events/CommentEdited.event';
 import UserId from 'src/User/Domain/ValueObjects/UserId';
 import CommentDeleted from '../Events/CommentDeleted.event';
+import NotFoundException from 'src/Common/Domain/Exceptions/NotFound.exception';
+import ForbiddenException from 'src/Common/Domain/Exceptions/Forbidden.exception';
 
 export default class Blog extends AggregateRoot {
   constructor(
@@ -66,12 +68,9 @@ export default class Blog extends AggregateRoot {
   editComment(commentId: CommentId, editorId: UserId, newText: CommentText) {
     const comment = this.comments.find((c) => c.id.equals(commentId));
 
-    console.log(comment?.userId.getValue, typeof comment?.userId.getValue);
-    console.log(editorId.getValue, typeof editorId.getValue);
-    console.log(comment?.userId.constructor === editorId.constructor);
-    console.log(comment?.userId.constructor.name, editorId.constructor.name);
-    if (!comment) throw new Error();
-    if (!comment.isOwnedBy(editorId)) throw new Error();
+    if (!comment) throw new NotFoundException('comment not found');
+    if (!comment.isOwnedBy(editorId))
+      throw new ForbiddenException('You can only edit your own comments');
     if (comment.text.equals(newText)) return; // if not changed dont send Event
 
     comment.edit(newText);
@@ -79,11 +78,14 @@ export default class Blog extends AggregateRoot {
   }
 
   deleteComment(commentId: CommentId, editorId: UserId) {
-    const comment = this.comments.find(comment => comment.id.equals(commentId))
+    const comment = this.comments.find((comment) =>
+      comment.id.equals(commentId),
+    );
 
-    if (!comment) throw new Error();
-    if (!comment.isOwnedBy(editorId)) throw new Error();
+    if (!comment) throw new NotFoundException('comment not found');
+    if (!comment.isOwnedBy(editorId))
+      throw new ForbiddenException('You can only delete your own comments');
 
-    this.addEvent(CommentDeleted.of(comment))
+    this.addEvent(CommentDeleted.of(comment));
   }
 }
