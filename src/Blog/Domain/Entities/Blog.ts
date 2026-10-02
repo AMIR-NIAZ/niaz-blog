@@ -12,6 +12,7 @@ import ViewCount from '../ValueObjects/ViewCount';
 import CommentId from '../ValueObjects/CommentId';
 import CommentEdited from '../Events/CommentEdited.event';
 import UserId from 'src/User/Domain/ValueObjects/UserId';
+import CommentDeleted from '../Events/CommentDeleted.event';
 
 export default class Blog extends AggregateRoot {
   constructor(
@@ -69,11 +70,20 @@ export default class Blog extends AggregateRoot {
     console.log(editorId.getValue, typeof editorId.getValue);
     console.log(comment?.userId.constructor === editorId.constructor);
     console.log(comment?.userId.constructor.name, editorId.constructor.name);
-    if (!comment) throw new Error("aa");
-    if (!comment.isOwnedBy(editorId)) throw new Error("bb");
+    if (!comment) throw new Error();
+    if (!comment.isOwnedBy(editorId)) throw new Error();
     if (comment.text.equals(newText)) return; // if not changed dont send Event
 
     comment.edit(newText);
     this.addEvent(CommentEdited.of(commentId));
+  }
+
+  deleteComment(commentId: CommentId, editorId: UserId) {
+    const comment = this.comments.find(comment => comment.id.equals(commentId))
+
+    if (!comment) throw new Error();
+    if (!comment.isOwnedBy(editorId)) throw new Error();
+
+    this.addEvent(CommentDeleted.of(comment))
   }
 }

@@ -15,6 +15,7 @@ import Comment from 'src/Blog/Domain/Entities/Comment';
 import { TypeOrmCommentEntity } from './TypeOrmComment.entity';
 import CommentMapper from './Mapper/TypeOrmComment.mapper';
 import CommentEdited from 'src/Blog/Domain/Events/CommentEdited.event';
+import CommentDeleted from 'src/Blog/Domain/Events/CommentDeleted.event';
 
 @Injectable()
 export class TypeOrmBlogRepository implements BlogRepository {
@@ -57,6 +58,10 @@ export class TypeOrmBlogRepository implements BlogRepository {
             (comment) => comment.id.getValue === event.commentId,
           )!,
         );
+      }
+
+      if (event instanceof CommentDeleted) {
+        this.DeleteCommentCommand(event.commentId)
       }
     }
   }
@@ -131,5 +136,9 @@ export class TypeOrmBlogRepository implements BlogRepository {
     const commentDocument = CommentMapper.toPersistence(comment, blogId);
 
     await this.commentRepository.save(commentDocument);
+  }
+
+  private async DeleteCommentCommand(commentId: string) {
+    await this.commentRepository.delete(commentId)
   }
 }

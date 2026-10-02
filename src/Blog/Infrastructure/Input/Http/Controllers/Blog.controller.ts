@@ -28,6 +28,7 @@ import { CreateCommentDto } from '../Dtos/CreateComment.dto';
 import { AddCommentCommand } from 'src/Blog/Application/UseCases/Commands/AddComment/AddComment.command';
 import { EditCommentDto } from '../Dtos/EditComment.dto';
 import { UpdateCommentCommand } from 'src/Blog/Application/UseCases/Commands/UpdateComment/UpdateComment.command';
+import { DeleteCommentCommand } from 'src/Blog/Application/UseCases/Commands/DeleteComment/DeleteComment.command';
 
 @Controller('blogs')
 export class BlogController {
@@ -107,10 +108,22 @@ export class BlogController {
     @Body() dto: EditCommentDto,
     @CurrentUser() userId: string,
   ) {
-    await this.commandBus.execute(
+    await this.commandBus.execute<UpdateCommentCommand, void>(
       new UpdateCommentCommand(dto.text, blogId, commentId, userId),
     );
 
     return { message: 'update comment successfully' };
+  }
+
+  @Delete(':blogId/comments/:commentId')
+  @UseGuards(PayloadGuard)
+  async removeComment(
+    @Param('blogId') blogId: string,
+    @Param('commentId') commentId: string,
+    @CurrentUser() userId: string,
+  ) {
+    await this.commandBus.execute<DeleteCommentCommand, void>(
+      new DeleteCommentCommand(blogId, commentId, userId),
+    );
   }
 }
